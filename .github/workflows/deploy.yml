@@ -1,0 +1,64 @@
+# ===============================================================
+# GitHub Actions:合并部署到 Cloudflare Pages
+# ---------------------------------------------------------------
+# 【流程】push 到 master/main(或手动触发)→ 安装依赖 →
+#         merge-dist.mjs 构建并合并 9 个应用到 dist-merged/ →
+#         wrangler 直传 Cloudflare Pages
+#
+# 【一次性配置】仓库 Settings → Secrets and variables → Actions 添加:
+#   - CLOUDFLARE_API_TOKEN  Cloudflare 面板 → My Profile → API Tokens
+#                           创建,权限模板选 "Cloudflare Pages — Edit"
+#   - CLOUDFLARE_ACCOUNT_ID Cloudflare 面板首页右侧 Account ID
+#   首次部署前先在 Cloudflare Pages 控制台创建同名项目
+#   (frontend-micro-apps),或让首次 wrangler 部署自动创建。
+# ===============================================================
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [master, main]
+  # 支持在 Actions 页面手动触发(任意分支)
+  workflow_dispatch:
+
+# 最小权限:读取代码 + 写部署状态(GitHub Environments 展示用)
+permissions:
+  contents: read
+  deployments: write
+
+# 同一时间只保留一次部署,新 push 自动取消进行中的旧构建
+concurrency:
+  group: cf-pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Node 20 + npm 缓存(lockfile 命中则依赖安装秒级完成)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 3. 严格按 lockfile 安装依赖(workspaces 一并装好)
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. 构建基座 + 8 个子应用并合并到 dist-merged/
+      #    (默认部署在根路径 '/';如需 GitHub Pages 子路径,加
+      #     MERGE_BASE 环境变量,如:MERGE_BASE: /repo-name/)
+      - name: Build merged dist
+        run: node scripts/merge-dist.mjs
+
+      # 5. 直传 Cloudflare Pages(--branch 用于 Pages 的预览/生产分支区分)
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist-merged --project-name=frontend-micro-apps --branch=main

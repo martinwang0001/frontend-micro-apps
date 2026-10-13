@@ -1,0 +1,21 @@
+# ===============================================================
+# Cloudflare Pages 自定义响应头(构建时由 merge-dist.mjs 拷入产物根)
+# ---------------------------------------------------------------
+# 合并部署为同源架构,理论上无需 CORS;此文件只负责缓存策略:
+#   - 入口 HTML 禁缓存 → 每次发版即时生效
+#   - 带内容哈希的 assets 一年强缓存 → 首访后增量极小
+# 注意:Cloudflare Pages 对未匹配路由自动回退根 index.html(SPA 模式),
+# 前提是产物根目录【没有】404.html —— 本项目不生成该文件。
+# ===============================================================
+
+# ---- 入口 HTML:禁缓存 ----
+/index.html
+  Cache-Control: no-cache
+/subapps/*/index.html
+  Cache-Control: no-cache
+
+# ---- 哈希资源:一年强缓存 + immutable ----
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+/subapps/*/assets/*
+  Cache-Control: public, max-age=31536000, immutable
