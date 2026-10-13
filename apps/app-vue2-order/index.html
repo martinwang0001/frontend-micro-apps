@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!-- 订单管理子应用入口 HTML(Vue2 老项目)
+     * 坑点 1:子应用的 #app 容器就是 qiankun 生命周期里实际挂载的节点;
+     *        被主应用加载时本 HTML 会作为"片段"插入主应用的容器 DOM 中。
+     * 坑点 2:入口 script 必须是 type="module",否则 vite-plugin-qiankun
+     *        的 useDevMode(以 ES Module 方式加载子应用)无法工作。
+     * 坑点 3:不要在 head 里硬编码外链全局样式/脚本(老项目常见写法),
+     *        它们在微前端下会绕过样式沙箱,直接污染主应用与其它子应用。 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 标题仅用于独立运行时的浏览器标签页;qiankun 模式下由主应用标题接管 -->
+    <title>订单管理(Vue2 老项目)</title>
+  </head>
+  <body>
+    <!-- qiankun 挂载点:main.js 中 $mount(props.container.querySelector('#app')) 的目标 -->
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

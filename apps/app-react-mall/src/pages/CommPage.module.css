@@ -1,0 +1,90 @@
+/**
+ * 通信演示页样式(CSS Modules)
+ */
+.title {
+  margin: 0 0 6px;
+  color: #7a2e1d;
+}
+
+.tip {
+  font-size: 12px;
+  color: #a08b83;
+  margin: 0 0 14px;
+}
+
+/* 演示区块卡片 */
+.section {
+  background: #ffffff;
+  border: 1px solid #ece0da;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(122, 46, 29, 0.08);
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: #7a2e1d;
+}
+
+.input {
+  padding: 6px 10px;
+  border: 1px solid #e0cdc4;
+  border-radius: 6px;
+  margin-right: 8px;
+  width: 240px;
+}
+
+.echo {
+  font-size: 12px;
+  color: #a08b83;
+  margin: 8px 0 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #c25030;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  margin-right: 8px;
+}
+
+.btn:hover {
+  opacity: 0.88;
+}
+
+.btnPlain {
+  composes: btn;
+  background: #f7ece7;
+  color: #c25030;
+}
+
+/* 事件列表 */
+.eventList {
+  margin: 10px 0 0;
+  padding: 10px 14px;
+  list-style: none;
+  background: #fdf6f2;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.9;
+  max-height: 180px;
+  overflow: auto;
+}
+
+.eventTime {
+  color: #a08b83;
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+.eventFrom {
+  color: #c25030;
+  margin-right: 6px;
+  font-weight: 600;
+}

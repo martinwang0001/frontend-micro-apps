@@ -1,0 +1,22 @@
+{
+  "name": "@app/portal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 8000 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --port 8000"
+  },
+  "dependencies": {
+    "@micro/shared": "*",
+    "pinia": "^2.2.4",
+    "qiankun": "^2.10.16",
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "vite": "^5.4.9"
+  }
+}

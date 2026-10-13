@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!-- 积分商城子应用入口 HTML -->
+<!-- 坑点说明:
+     1. 容器 id 固定为 "root",main.jsx 与 qiankun 生命周期都按此 id 查找挂载节点;
+     2. 被主应用加载时,本 HTML 会作为"片段"插入主应用的容器 DOM 中,
+        因此不要在 head 里写会污染全局的第三方脚本;
+     3. script 必须指向 /src/main.jsx(React 的 JSX 入口后缀是 .jsx 而非 .js)。 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>积分商城(React 子应用)</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

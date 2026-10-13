@@ -1,0 +1,26 @@
+{
+  "name": "frontend-micro-apps",
+  "version": "1.0.0",
+  "private": true,
+  "description": "企业级微前端整合示例:qiankun + npm workspaces monorepo,含 8 个子应用(Vue2/Vue3+Vite/React/Svelte)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n portal,vue2-user,vue2-order,vue3-dash,vue3-report,react-mall,react-cms,svelte-monitor,svelte-log \"npm:dev:portal\" \"npm:dev:vue2-user\" \"npm:dev:vue2-order\" \"npm:dev:vue3-dashboard\" \"npm:dev:vue3-report\" \"npm:dev:react-mall\" \"npm:dev:react-cms\" \"npm:dev:svelte-monitor\" \"npm:dev:svelte-log\"",
+    "dev:portal": "npm run dev -w apps/portal",
+    "dev:vue2-user": "npm run dev -w apps/app-vue2-user",
+    "dev:vue2-order": "npm run dev -w apps/app-vue2-order",
+    "dev:vue3-dashboard": "npm run dev -w apps/app-vue3-dashboard",
+    "dev:vue3-report": "npm run dev -w apps/app-vue3-report",
+    "dev:react-mall": "npm run dev -w apps/app-react-mall",
+    "dev:react-cms": "npm run dev -w apps/app-react-cms",
+    "dev:svelte-monitor": "npm run dev -w apps/app-svelte-monitor",
+    "dev:svelte-log": "npm run dev -w apps/app-svelte-log",
+    "build": "npm run build --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

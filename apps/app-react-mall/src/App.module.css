@@ -1,0 +1,53 @@
+/**
+ * 根组件样式(CSS Modules)
+ * ---------------------------------------------------------------
+ * 编译后所有类名被哈希化(如 .mallApp -> ._mallApp_1a2b3_1),
+ * 即使其它应用也定义了 .nav / .brand 同名类,也互不干扰 —— 编译期隔离。
+ */
+
+/* 应用根类:全局 CSS 变量挂在这里,而不是 :root,避免变量名冲突(坑点) */
+.mallApp {
+  --mall-primary: #c25030;
+  --mall-accent: #ffd166;
+  --mall-bg-card: #ffffff;
+  font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+}
+
+/* 顶部导航条 */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #7a2e1d, #c25030);
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.brand {
+  color: #fff;
+  font-weight: 700;
+  margin-right: 12px;
+}
+
+.brand em {
+  font-style: normal;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.link {
+  color: #ffe0d1;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.linkActive {
+  composes: link;
+  color: #fff;
+  border-bottom: 2px solid var(--mall-accent);
+}
+
+.main {
+  min-height: 300px;
+}

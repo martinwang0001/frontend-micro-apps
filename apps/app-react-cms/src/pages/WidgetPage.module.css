@@ -1,0 +1,44 @@
+/**
+ * Widget 页面样式(CSS Modules)
+ * 精简卡片,适配主应用聚合页的小尺寸容器。
+ */
+.widget {
+  background: #ffffff;
+  border: 1px solid #dce4ec;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(26, 58, 92, 0.08);
+}
+
+.title {
+  margin: 0 0 10px;
+  color: #1a3a5c;
+  font-size: 14px;
+}
+
+.tag {
+  font-size: 11px;
+  color: #8a99ab;
+  font-weight: 400;
+}
+
+.row {
+  display: flex;
+  gap: 18px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+}
+
+.num {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2b5a8a;
+}
+
+.label {
+  font-size: 11px;
+  color: #8a99ab;
+}

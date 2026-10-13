@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<!-- 日志中心子应用(Svelte)入口 HTML -->
+<!-- 坑点说明:子应用的 #app 容器就是 qiankun 生命周期里实际挂载的节点;
+     被主应用加载时本 HTML 会作为"片段"插入主应用的容器 DOM 中 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>日志中心(Svelte 子应用)</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

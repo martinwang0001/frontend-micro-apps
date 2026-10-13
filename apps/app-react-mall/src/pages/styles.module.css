@@ -1,0 +1,68 @@
+/**
+ * 样式隔离演示 —— CSS Modules 版本(隔离组)
+ * ---------------------------------------------------------------
+ * 本文件类名(panel/title/desc 等)与 styles-global.css 完全一致,
+ * 但经 Vite 编译后会被哈希化,如 .panel -> ._panel_8f3k2_1,
+ * 因此与全局同名类互不干扰 —— 这就是"编译期隔离"。
+ */
+
+.pageTitle {
+  margin: 0 0 14px;
+  color: #7a2e1d;
+}
+
+/* 与全局版同名的 .panel:编译后哈希化 */
+.panel {
+  background: #ffffff;
+  border: 1px solid #ece0da;
+  border-left: 4px solid #c25030;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(122, 46, 29, 0.08);
+}
+
+/* 与全局版同名的 .title:编译后哈希化 */
+.title {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: #c25030;
+}
+
+/* 与全局版同名的 .desc:编译后哈希化 */
+.desc {
+  font-size: 13px;
+  color: #5c4a44;
+  line-height: 1.8;
+}
+
+.list {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.9;
+  font-size: 13px;
+}
+
+/* 对照实验:左右两栏 */
+.compareRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* 哈希类名展示样式 */
+.hashName {
+  display: inline-block;
+  background: #f7ece7;
+  color: #7a2e1d;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin: 0 6px 6px 0;
+  word-break: break-all;
+}
+
+.hashName code,
+.hashName {
+  font-family: Consolas, monospace;
+}

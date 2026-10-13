@@ -1,0 +1,269 @@
+/* ============================================================
+ * 基座全局样式(主应用是平台外壳,拥有自己的设计变量与主题系统)
+ * 主题通过 <html data-theme="dark"> 切换,变量作用域 :root 归基座所有;
+ * 子应用一律不得向 :root 写变量(见各子应用样式注释)。
+ * ============================================================ */
+
+:root {
+  --p-bg: #f2f5f9;
+  --p-sidebar-bg: #16213a;
+  --p-sidebar-text: #9fb0cc;
+  --p-sidebar-active: #ffffff;
+  --p-header-bg: #ffffff;
+  --p-card-bg: #ffffff;
+  --p-text: #26324b;
+  --p-text-sub: #7d8aa5;
+  --p-primary: #2f6fed;
+  --p-border: #e3e8f0;
+}
+
+/* 暗色主题:基座换肤;共享 Store 的 theme 字段同步给所有子应用 */
+html[data-theme='dark'] {
+  --p-bg: #141a26;
+  --p-sidebar-bg: #0e1420;
+  --p-sidebar-text: #7f8db1;
+  --p-sidebar-active: #ffffff;
+  --p-header-bg: #1b2434;
+  --p-card-bg: #1b2434;
+  --p-text: #dbe4f3;
+  --p-text-sub: #8291ad;
+  --p-primary: #5b8cff;
+  --p-border: #2a3550;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--p-bg);
+  color: var(--p-text);
+}
+
+/* ---------- 布局骨架 ---------- */
+.pf-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* 侧边导航 */
+.pf-sidebar {
+  width: 216px;
+  flex-shrink: 0;
+  background: var(--p-sidebar-bg);
+  padding: 16px 10px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.pf-sidebar__logo {
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 6px 10px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 10px;
+}
+.pf-sidebar__group {
+  color: var(--p-sidebar-text);
+  font-size: 11px;
+  padding: 10px 10px 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.pf-sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--p-sidebar-text);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-bottom: 2px;
+  transition: background 0.15s;
+}
+.pf-sidebar a:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+.pf-sidebar a.router-link-active {
+  background: var(--p-primary);
+  color: var(--p-sidebar-active);
+}
+.pf-sidebar__tech {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-left: auto;
+}
+
+/* 主区 */
+.pf-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pf-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 20px;
+  background: var(--p-header-bg);
+  border-bottom: 1px solid var(--p-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.pf-header__title {
+  font-size: 15px;
+  font-weight: 600;
+}
+.pf-header__spacer {
+  flex: 1;
+}
+.pf-header__badge {
+  position: relative;
+  cursor: pointer;
+  font-size: 16px;
+}
+.pf-header__count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #e0503c;
+  color: #fff;
+  border-radius: 9px;
+  font-size: 10px;
+  padding: 1px 5px;
+}
+.pf-header__user {
+  font-size: 13px;
+  color: var(--p-text-sub);
+}
+.pf-header__user b {
+  color: var(--p-text);
+}
+.pf-btn {
+  padding: 5px 12px;
+  border: 1px solid var(--p-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--p-text);
+  cursor: pointer;
+  font-size: 12px;
+}
+.pf-btn:hover {
+  border-color: var(--p-primary);
+  color: var(--p-primary);
+}
+.pf-btn--primary {
+  background: var(--p-primary);
+  border-color: var(--p-primary);
+  color: #fff;
+}
+.pf-btn--primary:hover {
+  opacity: 0.9;
+  color: #fff;
+}
+
+.pf-content {
+  padding: 18px 20px;
+  flex: 1;
+}
+
+/* ---------- 通用卡片/表格 ---------- */
+.pf-card {
+  background: var(--p-card-bg);
+  border: 1px solid var(--p-border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.pf-card h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+}
+.pf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.pf-table th,
+.pf-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--p-border);
+}
+.pf-table th {
+  color: var(--p-text-sub);
+  font-weight: 500;
+  font-size: 12px;
+}
+.pf-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  background: rgba(47, 111, 237, 0.12);
+  color: var(--p-primary);
+}
+.pf-tag--green {
+  background: rgba(46, 158, 91, 0.12);
+  color: #2e9e5b;
+}
+.pf-tag--orange {
+  background: rgba(255, 159, 67, 0.15);
+  color: #e8890c;
+}
+.pf-tag--red {
+  background: rgba(224, 80, 60, 0.12);
+  color: #e0503c;
+}
+
+/* 子应用容器:占满剩余高度,内部应用自行滚动 */
+#subapp-viewport {
+  min-height: calc(100vh - 140px);
+}
+
+/* 聚合页网格 */
+.pf-hub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.pf-hub-cell {
+  background: var(--p-card-bg);
+  border: 1px solid var(--p-border);
+  border-radius: 10px;
+  padding: 12px;
+  min-height: 220px;
+}
+.pf-hub-cell__head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--p-text-sub);
+  margin-bottom: 8px;
+}
+.pf-hub-cell__id {
+  font-family: monospace;
+  font-size: 11px;
+}
+
+/* 事件日志流 */
+.pf-log {
+  max-height: 260px;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.9;
+}
+.pf-log__item {
+  border-bottom: 1px dashed var(--p-border);
+  padding: 2px 0;
+  word-break: break-all;
+}

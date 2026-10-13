@@ -1,0 +1,45 @@
+/**
+ * 应用全局样式(会被 qiankun 样式沙箱管控)
+ * ---------------------------------------------------------------
+ * 【样式规范 —— 防污染第一防线】
+ * 微前端多团队协作时,全局样式必须遵循 BEM 命名并统一加应用前缀(本应用: report-),
+ * 即使沙箱失效也不会把别家应用的样式冲掉。
+ * 框架内优先使用 scoped / CSS Modules,全局样式只放设计变量与基础类。
+ *
+ * 【坑点】
+ * CSS 变量不要挂 :root —— 多应用共存时同名变量会互相覆盖(谁后加载谁赢),
+ * 一律挂在应用根类 .report-app 上。
+ */
+
+/* 应用级 CSS 变量:挂在应用根类名下,而不是 :root,避免变量名冲突 */
+.report-app {
+  --report-primary: #6d3fd1;
+  --report-accent: #ffd166;
+  --report-bg-card: #ffffff;
+}
+
+.report-card {
+  background: var(--report-bg-card);
+  border: 1px solid #e7e3f3;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(109, 63, 209, 0.08);
+}
+
+.report-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--report-primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+.report-btn:hover {
+  opacity: 0.88;
+}
+.report-btn--plain {
+  background: #f1edf9;
+  color: var(--report-primary);
+}

@@ -1,0 +1,75 @@
+# ============================================================
+# 生产部署示例(Nginx)
+# ------------------------------------------------------------
+# 架构:每个应用独立构建、独立部署,可挂同一域名不同路径,也可独立子域名。
+# 本示例为「同域不同路径」方案(最常用):
+#   /                -> 主应用 portal
+#   /app-vue2-user/  -> 用户中心 dist
+#   ...其余子应用同理
+# 注意:此时各子应用构建需设置 base='/app-xxx/'(项目已支持 VITE_BASE 环境变量),
+#       且注册表 entry 改为对应路径或完整 URL。
+# ============================================================
+
+server {
+    listen       80;
+    server_name  micro.example.com;
+
+    # ---------- 主应用 ----------
+    location / {
+        root   /var/www/micro/portal;
+        index  index.html;
+        # SPA history 路由回退(坑点:不配则刷新 404)
+        try_files $uri $uri/ /index.html;
+    }
+
+    # ---------- 子应用(8 个,路径即 activeRule) ----------
+    location /app-vue2-user/ {
+        alias  /var/www/micro/app-vue2-user/;
+        index  index.html;
+        try_files $uri $uri/ /app-vue2-user/index.html;
+        # 允许主应用 fetch 拉取子应用入口与静态资源(跨域坑点)
+        add_header Access-Control-Allow-Origin *;
+    }
+    location /app-vue2-order/ {
+        alias  /var/www/micro/app-vue2-order/;
+        index  index.html;
+        try_files $uri $uri/ /app-vue2-order/index.html;
+        add_header Access-Control-Allow-Origin *;
+    }
+    location /app-vue3-dashboard/ {
+        alias  /var/www/micro/app-vue3-dashboard/;
+        index  index.html;
+        try_files $uri $uri/ /app-vue3-dashboard/index.html;
+        add_header Access-Control-Allow-Origin *;
+    }
+    location /app-vue3-report/ {
+        alias  /var/www/micro/app-vue3-report/;
+        index  index.html;
+        try_files $uri $uri/ /app-vue3-report/index.html;
+        add_header Access-Control-Allow-Origin *;
+    }
+    location /app-react-mall/ {
+        alias  /var/www/micro/app-react-mall/;
+        index  index.html;
+        try_files $uri $uri/ /app-react-mall/index.html;
+        add_header Access-Control-Allow-Origin *;
+    }
+    location /app-react-cms/ {
+        alias  /var/www/micro/app-react-cms/;
+        index  index.html;
+        try_files $uri $uri/ /app-react-cms/index.html;
+        add_header Access-Control-Allow-Origin *;
+    }
+    location /app-svelte-monitor/ {
+        alias  /var/www/micro/app-svelte-monitor/;
+        index  index.html;
+        try_files $uri $uri/ /app-svelte-monitor/index.html;
+        add_header Access-Control-Allow-Origin *;
+    }
+    location /app-svelte-log/ {
+        alias  /var/www/micro/app-svelte-log/;
+        index  index.html;
+        try_files $uri $uri/ /app-svelte-log/index.html;
+        add_header Access-Control-Allow-Origin *;
+    }
+}

@@ -1,0 +1,47 @@
+/**
+ * 样式隔离演示 —— 全局 CSS 版本(未隔离对照组)
+ * ---------------------------------------------------------------
+ * 【警告】本文件故意使用与 styles.module.css 完全相同的类名
+ * (panel / title / desc / hash-name),且不经过哈希化,直接以原样进入全局。
+ *
+ * 若主应用未开启样式沙箱,以下规则会污染所有应用里类名为 panel 的节点;
+ * 主应用开启 experimentalStyleIsolation 后,这些规则会被运行时改写为
+ *   div[data-qiankun="app-react-mall"] .panel { ... }
+ * 从而无法泄漏 —— 这就是"运行时隔离"兜底的价值。
+ *
+ * 注意:真实业务中禁止这样写全局同名通用类,此处仅为教学对照。
+ */
+
+/* 与 CSS Modules 版同名的 .panel:原样进入全局 */
+.panel {
+  background: #fffdf7;
+  border: 1px dashed #d8a23c;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* 与 CSS Modules 版同名的 .title:原样进入全局 */
+.title {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: #b07d1e;
+}
+
+/* 与 CSS Modules 版同名的 .desc:原样进入全局 */
+.desc {
+  font-size: 13px;
+  color: #7a6a55;
+  line-height: 1.8;
+}
+
+/* 全局版的哈希名展示样式(类名同样不哈希) */
+.hash-name {
+  display: inline-block;
+  background: #fdf3dc;
+  color: #b07d1e;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin: 0 6px 6px 0;
+  font-family: Consolas, monospace;
+}

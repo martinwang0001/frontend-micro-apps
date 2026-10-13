@@ -1,0 +1,41 @@
+/**
+ * 应用全局样式(会被 qiankun 样式沙箱管控)
+ * ---------------------------------------------------------------
+ * 【样式规范 —— 防污染第一防线】
+ * 微前端多团队协作时,全局样式必须遵循 BEM 命名并统一加应用前缀(本应用: monitor-),
+ * 即使沙箱失效也不会把别家应用的样式冲掉。
+ * Svelte 组件内样式默认 scoped(编译期追加 svelte-xxx 哈希),全局样式只放设计变量与基础类。
+ */
+
+/* 应用级 CSS 变量:挂在应用根类名下,而不是 :root,避免变量名冲突(坑点) */
+.monitor-app {
+  --monitor-primary: #b3541e;
+  --monitor-accent: #ffd166;
+  --monitor-bg-card: #ffffff;
+}
+
+.monitor-card {
+  background: var(--monitor-bg-card);
+  border: 1px solid #e3e8ef;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(179, 84, 30, 0.08);
+}
+
+.monitor-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--monitor-primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+.monitor-btn:hover {
+  opacity: 0.88;
+}
+.monitor-btn--plain {
+  background: #f6ece3;
+  color: var(--monitor-primary);
+}

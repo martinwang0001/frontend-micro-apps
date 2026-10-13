@@ -1,0 +1,88 @@
+/**
+ * 通信演示页样式(CSS Modules)
+ */
+.title {
+  margin: 0 0 6px;
+  color: #1a3a5c;
+}
+
+.tip {
+  font-size: 12px;
+  color: #8a99ab;
+  margin: 0 0 14px;
+}
+
+.section {
+  background: #ffffff;
+  border: 1px solid #dce4ec;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(26, 58, 92, 0.08);
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: #1a3a5c;
+}
+
+.input {
+  padding: 6px 10px;
+  border: 1px solid #c8d6e0;
+  border-radius: 6px;
+  margin-right: 8px;
+  width: 240px;
+}
+
+.echo {
+  font-size: 12px;
+  color: #8a99ab;
+  margin: 8px 0 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #2b5a8a;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  margin-right: 8px;
+}
+
+.btn:hover {
+  opacity: 0.88;
+}
+
+.btnPlain {
+  composes: btn;
+  background: #eaf0f6;
+  color: #2b5a8a;
+}
+
+.eventList {
+  margin: 10px 0 0;
+  padding: 10px 14px;
+  list-style: none;
+  background: #f3f7fb;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.9;
+  max-height: 180px;
+  overflow: auto;
+}
+
+.eventTime {
+  color: #8a99ab;
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+.eventFrom {
+  color: #2b5a8a;
+  margin-right: 6px;
+  font-weight: 600;
+}

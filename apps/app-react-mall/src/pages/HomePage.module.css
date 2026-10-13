@@ -1,0 +1,91 @@
+/**
+ * 商品列表页样式(CSS Modules)
+ * 编译后类名哈希化,如 .grid -> ._grid_x1y2z_1,与任何应用同名类互不干扰
+ */
+
+/* 页头:标题 + 购物车角标 */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.title {
+  margin: 0;
+  color: #7a2e1d;
+}
+
+/* 购物车角标:展示共享 store 的 cartCount */
+.cartBadge {
+  background: #fff3e0;
+  border: 1px solid #ffd166;
+  color: #7a2e1d;
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 13px;
+}
+
+.cartBadge b {
+  color: #c25030;
+  font-size: 16px;
+}
+
+.tip {
+  font-size: 12px;
+  color: #a08b83;
+  margin: 0 0 14px;
+}
+
+/* 商品网格:3 列自适应 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #ece0da;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(122, 46, 29, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #f7ece7;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3d2b26;
+}
+
+.points {
+  font-size: 13px;
+  color: #c25030;
+  font-weight: 700;
+}
+
+.addBtn {
+  align-self: flex-start;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #c25030;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.addBtn:hover {
+  opacity: 0.88;
+}

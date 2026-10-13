@@ -1,0 +1,55 @@
+/**
+ * 应用全局样式(在 Shadow DOM 内执行)
+ * ---------------------------------------------------------------
+ * 本应用被主应用以 strictStyleIsolation(Shadow DOM)挂载,
+ * 因此本文件里的规则天然不会影响主应用或其它子应用;
+ * 但仍然保留 cms- 前缀,防止 Shadow DOM 内部同名类冲突
+ * (如一个 ShadowRoot 内混入了多个微应用片段)。
+ *
+ * 【坑点】
+ * 1. CSS 变量建议挂在应用根类名下,而不是 :root(Shadow DOM 内 :root 不起作用);
+ * 2. @font-face / @import 字体、iconfont 在 Shadow DOM 内会失效,
+ *    需要特殊处理(见 StylePage 讲解)。
+ */
+
+.cms-card {
+  background: #ffffff;
+  border: 1px solid #dce4ec;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(26, 58, 92, 0.08);
+}
+
+.cms-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #2b5a8a;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.cms-btn:hover {
+  opacity: 0.88;
+}
+
+.cms-btn--plain {
+  background: #eaf0f6;
+  color: #2b5a8a;
+}
+
+.cms-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #e74c3c;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}

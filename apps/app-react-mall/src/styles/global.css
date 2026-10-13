@@ -1,0 +1,39 @@
+/**
+ * 应用全局样式(会被 qiankun 样式沙箱管控)
+ * ---------------------------------------------------------------
+ * 【样式规范 —— 防污染第一防线】
+ * 本应用以 CSS Modules 为主要样式方案,全局样式只放设计变量与基础类,
+ * 且统一加 mall- 前缀(BEM 约定),即使沙箱失效也不会冲掉别家应用。
+ *
+ * 【坑点】
+ * 这里的类名不会被哈希化(非 *.module.css),写法上视同"全局样式",
+ * 能否泄漏到主应用取决于主应用的 sandbox 配置(experimentalStyleIsolation)。
+ */
+
+.mall-card {
+  background: #ffffff;
+  border: 1px solid #ece0da;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(122, 46, 29, 0.08);
+}
+
+.mall-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #c25030;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.mall-btn:hover {
+  opacity: 0.88;
+}
+
+.mall-btn--plain {
+  background: #f7ece7;
+  color: #c25030;
+}

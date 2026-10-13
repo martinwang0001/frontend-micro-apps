@@ -1,0 +1,22 @@
+{
+  "name": "@app/react-cms",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 8086 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --port 8086"
+  },
+  "dependencies": {
+    "@micro/shared": "*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "vite": "^5.4.9",
+    "vite-plugin-qiankun": "^1.0.15"
+  }
+}

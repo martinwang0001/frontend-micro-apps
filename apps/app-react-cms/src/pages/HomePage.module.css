@@ -1,0 +1,93 @@
+/**
+ * 文章列表页样式(CSS Modules)
+ * 本应用整体处于 Shadow DOM 内,CSS Modules 作为第二层编译期隔离。
+ */
+.title {
+  margin: 0 0 6px;
+  color: #1a3a5c;
+}
+
+.tip {
+  font-size: 12px;
+  color: #8a99ab;
+  margin: 0 0 14px;
+}
+
+/* 文章表格 */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(26, 58, 92, 0.08);
+  font-size: 13px;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.table th {
+  background: #f4f7fa;
+  color: #5b7186;
+  font-weight: 600;
+}
+
+.cellTitle {
+  font-weight: 600;
+  color: #2b3a4a;
+}
+
+.cellTime {
+  color: #8a99ab;
+  font-size: 12px;
+}
+
+/* 状态标签 */
+.status {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.statusPublished {
+  background: #e5f7ef;
+  color: #1e9e63;
+}
+
+.statusDraft {
+  background: #fff6e0;
+  color: #b07d1e;
+}
+
+.statusOffline {
+  background: #f2f4f7;
+  color: #8a99ab;
+}
+
+/* 操作按钮 */
+.btn {
+  display: inline-block;
+  padding: 5px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #2b5a8a;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn:hover {
+  opacity: 0.88;
+}
+
+.btnPlain {
+  composes: btn;
+  background: #eaf0f6;
+  color: #2b5a8a;
+}

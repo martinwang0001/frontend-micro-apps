@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!-- 内容管理子应用入口 HTML -->
+<!-- 坑点说明:
+     1. 容器 id 固定为 "root",main.jsx 与 qiankun 生命周期都按此 id 查找挂载节点;
+     2. 本应用被主应用以 strictStyleIsolation(Shadow DOM)挂载,
+        本 HTML 片段实际会被插入 Shadow Root 内,内外样式完全隔离;
+     3. script 必须指向 /src/main.jsx(JSX 入口后缀为 .jsx)。 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>内容管理(React 子应用)</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

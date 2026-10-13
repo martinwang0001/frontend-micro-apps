@@ -1,0 +1,49 @@
+/**
+ * 根组件样式(CSS Modules)
+ * 编译后类名哈希化,Shadow DOM 内再套一层隔离,双层保险。
+ */
+
+.cmsApp {
+  --cms-primary: #2b5a8a;
+  --cms-accent: #4ecdc4;
+  --cms-bg-card: #ffffff;
+  font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #1a3a5c, #2b5a8a);
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.brand {
+  color: #fff;
+  font-weight: 700;
+  margin-right: 12px;
+}
+
+.brand em {
+  font-style: normal;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.link {
+  color: #cce3f5;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.linkActive {
+  composes: link;
+  color: #fff;
+  border-bottom: 2px solid var(--cms-accent);
+}
+
+.main {
+  min-height: 300px;
+}

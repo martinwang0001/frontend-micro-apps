@@ -1,0 +1,89 @@
+/**
+ * 用户中心应用全局样式(会被 qiankun 样式沙箱管控)
+ * ---------------------------------------------------------------
+ * 【样式规范 —— 防污染第一防线】
+ * 老项目历史样式债务重(裸选择器 / !important / :root 变量满天飞),
+ * 接入微前端后必须立规矩:全局样式遵循 BEM 命名并统一加应用前缀(本应用: user-),
+ * 即使沙箱失效也不会把别家应用的样式冲掉。
+ * 组件内优先使用 <style scoped>,全局样式只放设计变量与基础类。
+ */
+
+/*
+ * 应用级 CSS 变量:挂在应用根类 .user-app 上,而不是 :root。
+ * 坑点::root 是全局共享的,多个应用都往 :root 写同名变量会互相覆盖,
+ * 且样式沙箱的属性前缀隔离对 :root 不生效(它不在应用容器 DOM 内)。
+ */
+.user-app {
+  /* 主色:用于按钮、强调文字 */
+  --user-primary: #6a4c93;
+  /* 点缀色:用于导航高亮等 */
+  --user-accent: #ffd166;
+  /* 卡片底色 */
+  --user-bg-card: #ffffff;
+  /* 边框/分隔线色 */
+  --user-border: #e6e0f0;
+}
+
+/* ---------------- 通用类 ---------------- */
+/* 通用卡片:白底 + 细边框 + 轻投影,各页面区块统一使用 */
+.user-card {
+  background: var(--user-bg-card);
+  border: 1px solid var(--user-border);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(59, 47, 99, 0.08);
+}
+
+/* ---------------- 按钮 ---------------- */
+/* 通用按钮:主色实心;变体用 BEM 修饰符(--plain / --small)扩展 */
+.user-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--user-primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+/* 悬停反馈:仅降透明度,避免引入额外色值 */
+/* 老项目兼容提示:如需支持老式浏览器,opacity 需配 filter: alpha(...) */
+.user-btn:hover {
+  opacity: 0.88;
+}
+/* 按钮变体:浅色描边风(BEM 修饰符写法) */
+.user-btn--plain {
+  background: #f0ebf8;
+  color: var(--user-primary);
+}
+/* 按钮变体:表格行内操作用小号尺寸 */
+.user-btn--small {
+  padding: 3px 10px;
+  font-size: 12px;
+}
+
+/* ---------------- 表格 ---------------- */
+/* 老项目经典业务表格样式(BEM 前缀化后的版本) */
+/* border-collapse 合并边框避免双层线;字号略小符合数据密度 */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+/* 单元格:只保留下边框,视觉更轻 */
+.user-table th,
+.user-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--user-border);
+}
+/* 表头:浅底色 + 主色文字 */
+.user-table th {
+  background: #f7f4fb;
+  color: #3b2f63;
+  font-weight: 600;
+}
+/* 行悬停高亮,提升可读性 */
+.user-table tbody tr:hover {
+  background: #faf8fd;
+}

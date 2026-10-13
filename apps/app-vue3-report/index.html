@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!-- 报表中心子应用入口 HTML -->
+<!-- 坑点说明:子应用的 #app 容器就是 qiankun 生命周期里实际挂载的节点;
+     被主应用加载时本 HTML 会作为"片段"插入主应用的容器 DOM 中,
+     因此这里不允许出现 id 冲突(全应用只允许一个 #app,且挂载时必须从 props.container 内查找) -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>报表中心(Vue3 子应用)</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

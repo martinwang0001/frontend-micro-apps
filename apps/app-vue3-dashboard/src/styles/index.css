@@ -1,0 +1,41 @@
+/**
+ * 应用全局样式(会被 qiankun 样式沙箱管控)
+ * ---------------------------------------------------------------
+ * 【样式规范 —— 防污染第一防线】
+ * 微前端多团队协作时,全局样式必须遵循 BEM 命名并统一加应用前缀(本应用: dash-),
+ * 即使沙箱失效也不会把别家应用的样式冲掉。
+ * 框架内优先使用 scoped / CSS Modules,全局样式只放设计变量与基础类。
+ */
+
+/* 应用级 CSS 变量:挂在应用根类名下,而不是 :root,避免变量名冲突(坑点) */
+.dash-app {
+  --dash-primary: #1b5e8f;
+  --dash-accent: #ffd166;
+  --dash-bg-card: #ffffff;
+}
+
+.dash-card {
+  background: var(--dash-bg-card);
+  border: 1px solid #e3e8ef;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(15, 48, 87, 0.08);
+}
+
+.dash-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--dash-primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+.dash-btn:hover {
+  opacity: 0.88;
+}
+.dash-btn--plain {
+  background: #eef3f8;
+  color: var(--dash-primary);
+}

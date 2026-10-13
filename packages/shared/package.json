@@ -1,0 +1,15 @@
+{
+  "name": "@micro/shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "微前端共享能力包:框架无关的全局 Store / 事件总线 / 鉴权 / HTTP 封装,以及 Vue2/Vue3/React/Svelte 适配器",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./vue2": "./src/adapters/vue2.js",
+    "./vue3": "./src/adapters/vue3.js",
+    "./react": "./src/adapters/react.js",
+    "./svelte": "./src/adapters/svelte.js"
+  }
+}

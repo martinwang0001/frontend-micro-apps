@@ -1,0 +1,63 @@
+/**
+ * Shadow DOM 演示页样式(CSS Modules)
+ * Shadow DOM 已提供天然隔离,CSS Modules 作为第二层编译期隔离。
+ */
+.title {
+  margin: 0 0 14px;
+  color: #1a3a5c;
+}
+
+.section {
+  background: #ffffff;
+  border: 1px solid #dce4ec;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(26, 58, 92, 0.08);
+  margin-bottom: 12px;
+}
+
+.sectionTitle {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: #1a3a5c;
+}
+
+.desc {
+  font-size: 13px;
+  color: #3d5a75;
+  line-height: 1.8;
+}
+
+.list {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.9;
+  font-size: 13px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef2f6;
+  vertical-align: top;
+}
+
+.table th {
+  background: #f4f7fa;
+  color: #5b7186;
+  font-weight: 600;
+}
+
+.table code {
+  background: #eef3f8;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}

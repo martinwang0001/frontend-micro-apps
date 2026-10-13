@@ -1,0 +1,22 @@
+{
+  "name": "@app/vue3-report",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 8084 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --port 8084"
+  },
+  "dependencies": {
+    "@micro/shared": "*",
+    "pinia": "^2.2.4",
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "vite": "^5.4.9",
+    "vite-plugin-qiankun": "^1.0.15"
+  }
+}
