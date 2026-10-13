@@ -77,7 +77,7 @@
           </tr>
           <tr>
             <td>子应用 vue-router 与基座共享 history API → replaceState 冲突 + 导航卡死</td>
-            <td>qiankun 模式下子应用一律用 memory/abstract 路由,不操作 history;standalone 保留 web history;unmount 调 router.destroy()</td>
+            <td>qiankun 模式下子应用一律用 memory/abstract 路由,不操作 history;standalone 保留 web history;unmount 里 app.unmount() 自动卸载路由(vue-router 4 无 destroy 方法,误调会致应用标记 dead)</td>
             <td>各子应用 main.js 路由模式分流 + unmount</td>
           </tr>
           <tr>

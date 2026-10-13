@@ -101,8 +101,12 @@ renderWithQiankun({
   unmount() {
     // eslint-disable-next-line no-console
     console.log('[app-vue3-dashboard] unmount')
-    // 【坑点】先清理 router 再销毁 Vue 应用,避免操作已卸载的组件
-    router?.destroy()
+    // 【坑点】vue-router 4 的 router 实例【没有 destroy() 方法】
+    // (曾经错误地调用 router?.destroy() 导致 unmount 抛 TypeError,
+    //  qiankun 将应用标记为 dead,再次进入路由时永远无法重新挂载)。
+    // 正确清理方式:app.unmount() 会自动卸载 router 插件;
+    // qiankun 模式下用 memory 路由,不持有 window 级 popstate 监听,无泄漏;
+    // 置 null 即可释放引用交给 GC。
     app?.unmount()
     app = null
     router = null

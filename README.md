@@ -112,7 +112,7 @@ frontend-micro-apps/                  # npm workspaces monorepo
 | 7 | **`loadMicroApp` 并行挂载多个 widget 时 `vite-plugin-qiankun` 全局插槽竞争** | 按 `mountPromise` 串行挂载 | `WidgetHubView.vue` |
 | 8 | **模块多实例（各应用各自 new store 互不相通）** | 主应用创建唯一实例，qiankun `props` 下发 | `instances.js` → `setup.js` |
 | 9 | **路由 base 冲突（history 模式 404）** | qiankun 模式 `base=activeRule`；widget 模式用 memory 路由 | 各子应用 `main.js` |
-| 10 | **定时器/监听器泄漏（反复挂载叠加）** | `unmount` 统一清理；适配器自动退订；`router.destroy()` | 各应用 `unmount` + `@micro/shared` 适配器 |
+| 10 | **定时器/监听器泄漏（反复挂载叠加）** | `unmount` 统一清理；适配器自动退订；注意 vue-router 4 **没有 `router.destroy()`**，误调会导致应用被标记 dead 无法再挂载 | 各应用 `unmount` + `@micro/shared` 适配器 |
 | 11 | **Shadow DOM 内弹窗类库挂载点丢失** | `createPortal` 指定 `container` 为 Shadow DOM 内元素 | `app-react-cms` 组件 |
 | 12 | **CSS 变量（自定义属性）互相覆盖** | 变量挂应用根类（非 `:root`），各应用独立命名空间 | 各应用 `styles/index.css` |
 
