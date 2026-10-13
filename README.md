@@ -277,8 +277,8 @@ dist-merged/
 | 表单项 | 填写值 | 说明 |
 |---|---|---|
 | 构建命令 | `npm run build:merge` | 产物输出到 dist-merged/ |
-| 部署命令 | `npx wrangler deploy` | 读取根目录 `wrangler.jsonc` |
-| 预览命令 | `npx wrangler versions upload` | 非生产分支预览部署 |
+| 部署命令 | `npx wrangler deploy -c wrangler.jsonc` | **必须带 `-c`**：wrangler 在 monorepo 根目录会触发应用自动检测并报错，显式指定配置即视为"已定位具体项目"，跳过检测 |
+| 预览命令 | `npx wrangler versions upload -c wrangler.jsonc` | 同上,非生产分支预览部署 |
 | 高级设置 → 路径 | `/` | 保持默认 |
 
 [wrangler.jsonc](wrangler.jsonc) 已内置静态资产目录与 SPA 回退配置；静态资产请求免费不限量，部署地址为 `https://frontend-micro-apps.<账户子域>.workers.dev`。
