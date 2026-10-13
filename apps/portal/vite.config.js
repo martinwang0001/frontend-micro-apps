@@ -12,6 +12,9 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
+  // base 支持子路径部署:合并部署脚本(scripts/merge-dist.mjs)会注入
+  // VITE_BASE=站点根前缀(如 '/' 或 GitHub Pages 的 '/<repo>/')
+  base: process.env.VITE_BASE || '/',
   server: {
     port: 8000,
     open: false

@@ -14,8 +14,8 @@
  *  - widget      是否支持以 ID 容器方式被聚合页手动挂载(loadMicroApp + widgetMode)
  */
 
-/** 开发环境各应用端口;生产部署时替换为真实 CDN/域名即可 */
-const ENTRIES = {
+/** 开发环境各应用端口(各 vite dev server) */
+const DEV_ENTRIES = {
   vue2User: '//localhost:8081',
   vue2Order: '//localhost:8082',
   vue3Dashboard: '//localhost:8083',
@@ -25,6 +25,29 @@ const ENTRIES = {
   svelteMonitor: '//localhost:8087',
   svelteLog: '//localhost:8088'
 }
+
+/**
+ * 【合并部署模式】(方案 A:单域名静态托管)
+ * scripts/merge-dist.mjs 构建基座时注入 VITE_DEPLOY=merge 与
+ * VITE_MERGE_BASE(站点根前缀),此时 ENTRIES 使用站点内相对路径:
+ * 子应用与基座同源 → qiankun fetch 不跨域,彻底免除 CORS 配置。
+ * 独立域名部署(方案 B)时不注入该变量,仍走 DEV_ENTRIES 或手工替换。
+ */
+const MERGE_DEPLOY = import.meta.env.VITE_DEPLOY === 'merge'
+const MERGE_BASE = import.meta.env.VITE_MERGE_BASE || '/'
+const MERGED_ENTRIES = {
+  vue2User: `${MERGE_BASE}subapps/app-vue2-user/`,
+  vue2Order: `${MERGE_BASE}subapps/app-vue2-order/`,
+  vue3Dashboard: `${MERGE_BASE}subapps/app-vue3-dashboard/`,
+  vue3Report: `${MERGE_BASE}subapps/app-vue3-report/`,
+  reactMall: `${MERGE_BASE}subapps/app-react-mall/`,
+  reactCms: `${MERGE_BASE}subapps/app-react-cms/`,
+  svelteMonitor: `${MERGE_BASE}subapps/app-svelte-monitor/`,
+  svelteLog: `${MERGE_BASE}subapps/app-svelte-log/`
+}
+
+/** 构建期分流:合并部署用相对路径,开发/独立部署用端口地址 */
+const ENTRIES = MERGE_DEPLOY ? MERGED_ENTRIES : DEV_ENTRIES
 
 export const microApps = [
   {

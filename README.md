@@ -42,7 +42,13 @@ frontend-micro-apps/                  # npm workspaces monorepo
 │       ├── event-bus/                #   事件总线(发布订阅)
 │       ├── adapters/                 #   四框架适配器(Vue2/Vue3/React/Svelte)
 │       └── constants/                #   Token / 事件名 / 全局状态键
-└── package.json                      # workspaces 根配置
+├── scripts/
+│   └── merge-dist.mjs                # 合并部署构建脚本(单域名方案 A)
+├── deploy/
+│   └── _headers                      # Cloudflare Pages 响应头(缓存策略)
+├── .github/workflows/
+│   └── deploy.yml                    # CI/CD:push 自动部署到 Cloudflare Pages
+└── package.json                      # workspaces 根配置(npm workspaces)
 ```
 
 ---
@@ -232,7 +238,41 @@ npm run build
 # ...
 ```
 
-### 独立部署（推荐）
+### 免费云端部署（方案 A：合并部署到 Cloudflare Pages）
+
+**单域名、全同源、零 CORS**，一个链接即可体验整个平台，最适合公开演示：
+
+```bash
+npm run build:merge     # 构建 9 个应用并合并到 dist-merged/
+npm run preview:merge   # 本地预览合并产物(http://localhost:4173)
+```
+
+合并产物结构：
+
+```
+dist-merged/
+├── index.html              # 基座(站点根)
+├── assets/                 # 基座资源
+├── _headers                # Cloudflare Pages 缓存策略
+└── subapps/
+    ├── app-vue2-user/      # 子应用按子路径组织
+    ├── app-vue3-dashboard/
+    └── ...
+```
+
+**工作原理**：构建脚本注入 `VITE_DEPLOY=merge`，[registry.js](apps/portal/src/micro/registry.js) 在构建期把子应用 ENTRIES 切换为站点内相对路径（`/subapps/app-xxx/`）；子应用 vite `base` 同步指向各自子路径。基座路由是 `/app-*` 前缀，与 `/subapps/*` 天然隔离，互不冲突。
+
+**上线步骤（全自动 CI/CD）**：
+
+1. Push 本仓库到 GitHub
+2. Cloudflare 面板创建 API Token（模板选 `Cloudflare Pages — Edit`），拿到 `Account ID`
+3. GitHub 仓库 → Settings → Secrets → Actions 添加 `CLOUDFLARE_API_TOKEN` 与 `CLOUDFLARE_ACCOUNT_ID`
+4. 完成 —— 之后每次 push 到 master/main，[.github/workflows/deploy.yml](.github/workflows/deploy.yml) 自动构建并部署到 `https://frontend-micro-apps.pages.dev`
+
+> 免费额度：Cloudflare Pages 带宽与请求不限量、500 次构建/月；`pages.dev` 域名国内可直接访问。
+> 若部署到 GitHub Pages 项目站（`/<repo>/` 路径前缀），构建时改用 `MERGE_BASE=/<repo>/ npm run build:merge`。
+
+### 独立部署（方案 B）
 
 每个子应用独立部署到不同域名/CDN，修改 `registry.js` 中的 `ENTRIES` 即可：
 

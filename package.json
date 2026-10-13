@@ -19,6 +19,8 @@
     "dev:svelte-monitor": "npm run dev -w apps/app-svelte-monitor",
     "dev:svelte-log": "npm run dev -w apps/app-svelte-log",
     "build": "npm run build --workspaces --if-present",
+    "build:merge": "node scripts/merge-dist.mjs",
+    "preview:merge": "npx -y serve dist-merged -l 4173 --single",
     "docker:build": "docker compose build",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
