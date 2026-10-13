@@ -1,0 +1,40 @@
+/**
+ * Cloudflare Workers 静态资产部署配置
+ * ===============================================================
+ * 【用途】配合 Cloudflare 控制台 "Workers Git 集成" 直连构建:
+ *   控制台只负责执行 构建命令(npm run build:merge) 与
+ *   部署命令(npx wrangler deploy),资产目录 / SPA 回退等
+ *   托管策略全部由本文件声明 —— 配置即代码,不散落在控制台里。
+ *
+ * 【与 GitHub Actions 方案的关系】二选一:
+ *   - Git 集成(本文件):推送即构建,无需配置任何 Secret,最简;
+ *   - Actions(.github/workflows/deploy.yml):需要 CLOUDFLARE_API_TOKEN,
+ *     适合需要自控流水线的场景。两者可共存,互不冲突。
+ *
+ * 【免费额度】Workers 静态资产请求【免费且不限量】(CDN 边缘分发),
+ * 仅当 Worker 脚本本身处理动态请求时才计入付费额度 —— 纯静态托管零成本。
+ * ===============================================================
+ */
+{
+  /** Worker 名称:必须与控制台表单里的"项目名称"一致,决定默认域名前缀 */
+  "name": "frontend-micro-apps",
+
+  /** 运行时兼容日期(纯静态资产场景仅作元数据,写一个近期日期即可) */
+  "compatibility_date": "2026-09-01",
+
+  /**
+   * 静态资产托管:不声明 main(无 Worker 脚本入口),
+   * 即"纯静态站点"模式 —— wrangler deploy 直接把目录上传到边缘 CDN。
+   */
+  "assets": {
+    /** merge-dist.mjs 的产物目录(构建命令执行后生成) */
+    "directory": "./dist-merged",
+
+    /**
+     * 未匹配路由回退到根 index.html:
+     * 基座使用 history 路由(/app-style-lab 等深链刷新必需),
+     * 等价于 Cloudflare Pages 的自动 SPA 回退。
+     */
+    "not_found_handling": "single-page-application"
+  }
+}

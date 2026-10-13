@@ -272,6 +272,17 @@ dist-merged/
 > 免费额度：Cloudflare Pages 带宽与请求不限量、500 次构建/月；`pages.dev` 域名国内可直接访问。
 > 若部署到 GitHub Pages 项目站（`/<repo>/` 路径前缀），构建时改用 `MERGE_BASE=/<repo>/ npm run build:merge`。
 
+**替代方式（更简，推荐）—— Cloudflare Workers Git 集成**：新版控制台支持直连 GitHub 构建，无需 Actions 与任何 Secret。填法：
+
+| 表单项 | 填写值 | 说明 |
+|---|---|---|
+| 构建命令 | `npm run build:merge` | 产物输出到 dist-merged/ |
+| 部署命令 | `npx wrangler deploy` | 读取根目录 `wrangler.jsonc` |
+| 预览命令 | `npx wrangler versions upload` | 非生产分支预览部署 |
+| 高级设置 → 路径 | `/` | 保持默认 |
+
+[wrangler.jsonc](wrangler.jsonc) 已内置静态资产目录与 SPA 回退配置；静态资产请求免费不限量，部署地址为 `https://frontend-micro-apps.<账户子域>.workers.dev`。
+
 ### 独立部署（方案 B）
 
 每个子应用独立部署到不同域名/CDN，修改 `registry.js` 中的 `ENTRIES` 即可：
