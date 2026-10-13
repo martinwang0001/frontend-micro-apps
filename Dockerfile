@@ -50,6 +50,11 @@ RUN npm run build -w apps/${APP_NAME}
 # 静态站点用 nginx 托管;多阶段构建保证最终镜像不含 node_modules
 FROM nginx:1.27-alpine
 
+# 【坑点修复】ARG 是【阶段作用域】的:builder 阶段声明的 ARG APP_NAME
+# 不会自动带到这里,必须重新声明才能拿到 --build-arg 的值,
+# 否则 ${APP_NAME} 展开为空,COPY 路径塌陷成 /app/apps//dist → 构建失败
+ARG APP_NAME
+
 # 运行时参数:基座与子应用使用不同的 nginx 配置
 ARG NGINX_CONF=docker/nginx/subapp.conf
 

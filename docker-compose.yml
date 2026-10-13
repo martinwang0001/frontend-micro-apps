@@ -9,6 +9,10 @@
 # 【镜像策略】9 个服务共用根目录 Dockerfile,通过 build.args
 # 注入 APP_NAME(构建哪个 workspace)与 NGINX_CONF(运行时配置)。
 #
+# 【pull_policy: build】镜像 micro/* 只存在于本地(不在 Docker Hub),
+# 不设置该策略时 compose up 会先尝试从 registry 拉取 → 报
+# "error from registry: denied" 噪音;设置后强制只构建、永不拉取。
+#
 # 【生产化提示】示例映射 registry.js 写死的 localhost 端口;
 # 真实生产把 ENTRIES 换成 CDN/域名,并把子应用发布到对应环境即可,
 # compose 结构不变。
@@ -16,9 +20,22 @@
 
 name: frontend-micro-apps
 
+# ---- 公共策略锚点:所有服务合并注入,避免 9 份重复 ----
+x-common: &common
+  # 镜像仅本地构建(micro/* 非真实 Hub 仓库),只 build 不 pull
+  pull_policy: build
+  networks: [micro-net]
+  restart: unless-stopped
+  healthcheck:
+    test: ["CMD", "wget", "-qO-", "http://localhost/"]
+    interval: 15s
+    timeout: 3s
+    retries: 3
+
 services:
   # ---- 基座:用户访问的唯一入口 ----
   portal:
+    <<: *common
     build:
       context: .
       dockerfile: Dockerfile
@@ -39,17 +56,10 @@ services:
       - app-react-cms
       - app-svelte-monitor
       - app-svelte-log
-    networks:
-      - micro-net
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 15s
-      timeout: 3s
-      retries: 3
-    restart: unless-stopped
 
   # ---- 8 个子应用:构建流程完全一致,仅 APP_NAME 不同 ----
   app-vue2-user:
+    <<: *common
     build:
       context: .
       args: { APP_NAME: app-vue2-user }
@@ -57,15 +67,9 @@ services:
     container_name: micro-app-vue2-user
     ports:
       - "${VUE2_USER_PORT:-8081}:80"
-    networks: [micro-net]
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 15s
-      timeout: 3s
-      retries: 3
-    restart: unless-stopped
 
   app-vue2-order:
+    <<: *common
     build:
       context: .
       args: { APP_NAME: app-vue2-order }
@@ -73,15 +77,9 @@ services:
     container_name: micro-app-vue2-order
     ports:
       - "${VUE2_ORDER_PORT:-8082}:80"
-    networks: [micro-net]
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 15s
-      timeout: 3s
-      retries: 3
-    restart: unless-stopped
 
   app-vue3-dashboard:
+    <<: *common
     build:
       context: .
       args: { APP_NAME: app-vue3-dashboard }
@@ -89,15 +87,9 @@ services:
     container_name: micro-app-vue3-dashboard
     ports:
       - "${VUE3_DASHBOARD_PORT:-8083}:80"
-    networks: [micro-net]
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 15s
-      timeout: 3s
-      retries: 3
-    restart: unless-stopped
 
   app-vue3-report:
+    <<: *common
     build:
       context: .
       args: { APP_NAME: app-vue3-report }
@@ -105,15 +97,9 @@ services:
     container_name: micro-app-vue3-report
     ports:
       - "${VUE3_REPORT_PORT:-8084}:80"
-    networks: [micro-net]
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 15s
-      timeout: 3s
-      retries: 3
-    restart: unless-stopped
 
   app-react-mall:
+    <<: *common
     build:
       context: .
       args: { APP_NAME: app-react-mall }
@@ -121,15 +107,9 @@ services:
     container_name: micro-app-react-mall
     ports:
       - "${REACT_MALL_PORT:-8085}:80"
-    networks: [micro-net]
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 15s
-      timeout: 3s
-      retries: 3
-    restart: unless-stopped
 
   app-react-cms:
+    <<: *common
     build:
       context: .
       args: { APP_NAME: app-react-cms }
@@ -137,15 +117,9 @@ services:
     container_name: micro-app-react-cms
     ports:
       - "${REACT_CMS_PORT:-8086}:80"
-    networks: [micro-net]
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 15s
-      timeout: 3s
-      retries: 3
-    restart: unless-stopped
 
   app-svelte-monitor:
+    <<: *common
     build:
       context: .
       args: { APP_NAME: app-svelte-monitor }
@@ -153,15 +127,9 @@ services:
     container_name: micro-app-svelte-monitor
     ports:
       - "${SVELTE_MONITOR_PORT:-8087}:80"
-    networks: [micro-net]
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 15s
-      timeout: 3s
-      retries: 3
-    restart: unless-stopped
 
   app-svelte-log:
+    <<: *common
     build:
       context: .
       args: { APP_NAME: app-svelte-log }
@@ -169,13 +137,6 @@ services:
     container_name: micro-app-svelte-log
     ports:
       - "${SVELTE_LOG_PORT:-8088}:80"
-    networks: [micro-net]
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
-      interval: 15s
-      timeout: 3s
-      retries: 3
-    restart: unless-stopped
 
 networks:
   micro-net:
