@@ -1,0 +1,29 @@
+# Docker 构建上下文排除清单
+# ---------------------------------------------------------------
+# 目标:让构建上下文尽可能小(只含源码 + 锁文件),
+# 避免把本地 node_modules / 构建产物 / git 历史打进镜像层。
+
+# 依赖与构建产物(镜像内会重新安装/构建)
+node_modules
+**/node_modules
+dist
+**/dist
+
+# 版本控制与编辑器
+.git
+.gitignore
+.idea
+.vscode
+
+# 文档(不影响运行)
+README.md
+需求
+
+# Docker 自身(避免递归)
+docker-compose.override.yml
+
+# 日志与临时文件
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db

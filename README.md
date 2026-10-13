@@ -270,22 +270,35 @@ server {
 
 ### 容器化部署
 
-每个子应用一个 Dockerfile，独立 CI/CD 流水线：
+项目内置**一份通用 Dockerfile + docker-compose 编排**，9 个应用（基座 + 8 子应用）共用同一构建流程，通过构建参数差异化：
 
-```dockerfile
-# apps/app-vue3-dashboard/Dockerfile
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-COPY apps/app-vue3-dashboard ./apps/app-vue3-dashboard
-COPY packages ./packages
-RUN npm ci
-RUN npm run build -w apps/app-vue3-dashboard
-
-FROM nginx:alpine
-COPY --from=builder /app/apps/app-vue3-dashboard/dist /usr/share/nginx/html
-EXPOSE 80
 ```
+Dockerfile                  # 通用多阶段构建(ARG APP_NAME / NGINX_CONF)
+docker-compose.yml          # 9 个容器编排,端口与 registry.js 严格对齐
+docker/nginx/portal.conf    # 基座 nginx(SPA 回退 + 静态资源长缓存)
+docker/nginx/subapp.conf    # 子应用 nginx(CORS + gzip + 哈希资源强缓存)
+.dockerignore               # 构建上下文瘦身
+```
+
+**一键容器化启动**：
+
+```bash
+npm run docker:build   # 构建全部 9 个镜像(multi-stage:node 构建 → nginx 运行)
+npm run docker:up      # 后台启动全部容器
+npm run docker:down    # 停止并移除
+```
+
+启动后访问 `http://localhost:8000/`，端口映射与本地开发完全一致（8000 / 8081~8088），`registry.js` 无需任何修改。
+
+**关键设计**：
+
+| 设计点 | 说明 |
+|---|---|
+| 分层缓存 | Dockerfile 先只 COPY 各 workspace 的 `package.json` 再 `npm ci`，源码变更不触发依赖重装 |
+| 端口契约 | qiankun 从**浏览器**跨端口 fetch 子应用，所以宿主机发布端口必须等于 `registry.js` 的 ENTRIES 端口 |
+| CORS | 子应用 nginx 必须放行跨域（qiankun fetch 入口 HTML 的硬性要求），见 `subapp.conf` |
+| 缓存策略 | `/assets/` 哈希资源 `immutable` 一年强缓存；入口 HTML `no-cache` 保证发版即时生效 |
+| 端口可调 | 宿主机端口通过环境变量覆盖（如 `VUE2_USER_PORT=9081 docker compose up`），容器内恒为 80 |
 
 ---
 
